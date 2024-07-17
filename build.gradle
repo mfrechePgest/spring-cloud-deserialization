@@ -1,0 +1,44 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.3.1'
+	id 'io.spring.dependency-management' version '1.1.5'
+	id("io.freefair.lombok") version "8.6"
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+ext {
+	springCloudVersion = "2023.0.3"
+}
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+
+	implementation platform("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}")
+	implementation("org.springframework.cloud:spring-cloud-starter-stream-rabbit")
+
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	testImplementation("org.springframework.boot:spring-boot-testcontainers")
+	testImplementation("org.testcontainers:junit-jupiter")
+	testImplementation("org.testcontainers:rabbitmq")
+
+	testImplementation("org.awaitility:awaitility:4.2.1")
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

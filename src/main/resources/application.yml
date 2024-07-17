@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: demo
+  cloud:
+    function:
+      definition: eventReceived;eventReceivedJsonIgnore
+    stream:
+      binders:
+        rabbit:
+          type: rabbit
+      bindings:
+        eventReceived-in-0:
+          destination: sample.exchange
+          contentType: application/json
+          binder: rabbit
+          group: demoQueue
+        eventReceivedJsonIgnore-in-0:
+          destination: sample.exchange2
+          contentType: application/json
+          binder: rabbit
+          group: demoQueue
